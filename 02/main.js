@@ -6,6 +6,8 @@ const testInput = `11-22,95-115,998-1012,1188511880-1188511890,222220-222224,169
 
 const input = realInput.trim().split(',').map(x => x.split('-').map(y => +y));
 
+// Part 1
+
 function part1() {
   let total = 0;
 
@@ -29,6 +31,16 @@ function part1() {
   console.log(total)
 }
 
+// Part 2
+
+function chunkString(string, chunkSize) {
+  let chunks = [];
+  for (let i = 0; i < string.length; i += chunkSize) {
+    chunks.push(string.substring(i, i + chunkSize));
+  }
+  return chunks;
+}
+
 function part2() {
   let total = 0;
 
@@ -40,16 +52,12 @@ function part2() {
       let idString = i.toString();
       let idIsInvalid = false;
 
-      for (let patternLength = 1; patternLength <= idString.length / 2; patternLength++) {      // Check every pattern size that fits in the ID
-        if (idString.length % patternLength === 0) {                                            // Pattern sizes that don't fit fully can be ignored
-          let chunks = [];
-          for (let i = 0; i < idString.length; i += patternLength) {                            // Didive the ID into equal chunks
-            chunks.push(idString.substring(i, i + patternLength));
-          }
-          if (chunks.every(x => x == chunks[0])) {                                              // Check if every chunk is the same and break out of the loop to count that ID
-            idIsInvalid = true;
-            break;
-          }
+      for (let patternLength = 1; patternLength <= Math.trunc(idString.length / 2); patternLength++) {      // Check every pattern size that fits in the ID
+        let chunks = chunkString(idString, patternLength);
+
+        if (chunks.every(x => x == chunks[0])) {                                              // Check if every chunk is the same and break out of the loop to count that ID
+          idIsInvalid = true;
+          break;
         }
       }
       if (idIsInvalid) {
