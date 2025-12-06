@@ -50,11 +50,11 @@ function part2() {
   let grandTotal = 0
   let valueList = []
 
-  for (let i = input2[0].length - 1; i >= 0; i--) {         // Because all rows are the same length, just loop over the first one
-    const operator = input2[columnHeight - 1][i]            // The operator (when present) is in the last row of each the collum
+  for (let i = input2[0].length - 1; i >= 0; i--) {         // Because all rows are the same length, just loop backwards over the first one
+    const operator = input2[columnHeight - 1][i]            // The operator (when present) is in the last row of each column
     const chars = []
 
-    for (let ii = 0; ii < columnHeight - 1; ii++) {         // Loop over every row in the current column (i) except the last one, because that has the operator
+    for (let ii = 0; ii < columnHeight - 1; ii++) {         // Loop over every row in the current column (i) except the last one, because that is the operator (or empty)
       chars.push(input2[ii][i])
     }
 
